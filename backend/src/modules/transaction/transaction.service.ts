@@ -86,6 +86,26 @@ export class TransactionService {
     await this.transactionRepository.remove(transaction);
   }
 
+  async calculateBalance(user: UserEntity): Promise<string> {
+    const transactions = await this.transactionRepository.find({
+      where: { user: { id: user.id } },
+      select: ['value'],
+    });
+
+    const total = transactions.reduce((sum, transaction) => {
+      const value = Number(transaction.value);
+      return !isNaN(value) ? sum + value : sum;
+    }, 0);
+
+    const formattedBalance = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+    }).format(total);
+
+    return formattedBalance;
+  }
+
   private formatTransactionResponse(
     transaction: TransactionEntity,
   ): TransactionResponseDto {

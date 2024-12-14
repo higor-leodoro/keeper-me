@@ -56,4 +56,10 @@ export class TransactionController {
     await this.transactionsService.deleteTransaction(id, user);
     return { message: 'transaction deleted successfully' };
   }
+
+  @Get('balance')
+  async calculateBalance(@Req() request: Request) {
+    const user = request['user'];
+    return { balance: await this.transactionsService.calculateBalance(user) };
+  }
 }
