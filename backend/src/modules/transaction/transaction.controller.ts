@@ -14,7 +14,9 @@ import { TransactionService } from './transaction.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { TransactionDto } from './dtos/transaction.dto';
 import { TransactionResponseDto } from './dtos/transaction.response.dto';
+import { ApiTags, ApiOperation } from '@nestjs/swagger';
 
+@ApiTags('transactions')
 @Controller('transactions')
 @UseGuards(AuthGuard)
 export class TransactionController {

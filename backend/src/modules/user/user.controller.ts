@@ -12,7 +12,9 @@ import {
 import { UserService } from './user.service';
 import { UserDto } from './user.dto';
 import { AuthGuard } from '../auth/auth.guard';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('users')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
