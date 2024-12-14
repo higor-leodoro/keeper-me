@@ -8,7 +8,7 @@ import {
 } from 'class-validator';
 import { TransactionType } from './transaction.type.enum';
 
-export class TransactionsDto {
+export class TransactionDto {
   @IsUUID()
   @IsOptional()
   id: string;
