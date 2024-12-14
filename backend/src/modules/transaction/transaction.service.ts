@@ -2,8 +2,10 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TransactionEntity } from './transaction.entity';
 import { Repository } from 'typeorm';
-import { TransactionDto } from './transaction.dto';
+import { TransactionDto } from './dtos/transaction.dto';
 import { UserEntity } from '../user/user.entity';
+import { formatDate } from 'src/utils/format.date';
+import { TransactionResponseDto } from './dtos/transaction.response.dto';
 
 @Injectable()
 export class TransactionService {
@@ -15,7 +17,7 @@ export class TransactionService {
   async createTransaction(
     transaction: TransactionDto,
     user: UserEntity,
-  ): Promise<Partial<TransactionEntity>> {
+  ): Promise<TransactionResponseDto> {
     const value =
       transaction.type === 'expense'
         ? -Math.abs(transaction.value)
@@ -30,14 +32,57 @@ export class TransactionService {
     const savedTransaction =
       await this.transactionRepository.save(newTransaction);
 
-    const { user: _, ...transactionWithoutUser } = savedTransaction;
-
-    return transactionWithoutUser;
+    return this.formatTransactionResponse(savedTransaction);
   }
 
-  async getAllTransactions(user: UserEntity): Promise<TransactionEntity[]> {
-    return await this.transactionRepository.find({
+  async getAllTransactions(
+    user: UserEntity,
+  ): Promise<TransactionResponseDto[]> {
+    const transactions = await this.transactionRepository.find({
       where: { user: { id: user.id } },
     });
+
+    return transactions.map(this.formatTransactionResponse);
+  }
+
+  async updateTransactionById(
+    id: string,
+    transaction: TransactionDto,
+    user: UserEntity,
+  ): Promise<TransactionResponseDto> {
+    const existingTransaction = await this.transactionRepository.findOne({
+      where: { id, user: { id: user.id } },
+    });
+
+    if (!existingTransaction) {
+      throw new Error('Transaction not found');
+    }
+
+    const value =
+      transaction.type === 'expense'
+        ? -Math.abs(transaction.value)
+        : Math.abs(transaction.value);
+
+    await this.transactionRepository.update(id, {
+      description: transaction.description,
+      value,
+      type: transaction.type,
+    });
+
+    const updatedTransaction = await this.transactionRepository.findOne({
+      where: { id },
+    });
+
+    return this.formatTransactionResponse(updatedTransaction);
+  }
+
+  private formatTransactionResponse(
+    transaction: TransactionEntity,
+  ): TransactionResponseDto {
+    const { user, ...transactionWithoutUser } = transaction;
+    return {
+      ...transactionWithoutUser,
+      date: formatDate(transaction.date),
+    };
   }
 }

@@ -6,7 +6,7 @@ import {
   IsUUID,
   IsEnum,
 } from 'class-validator';
-import { TransactionType } from './transaction.type.enum';
+import { TransactionType } from '../transaction.type.enum';
 
 export class TransactionDto {
   @IsUUID()
