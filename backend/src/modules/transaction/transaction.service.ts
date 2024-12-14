@@ -54,7 +54,7 @@ export class TransactionService {
     user: UserEntity,
     startDate?: string,
     endDate?: string,
-  ): Promise<TransactionResponseDto[]> {
+  ): Promise<{ transactions: TransactionResponseDto[]; totalExpense: string }> {
     let whereCondition: FindOptionsWhere<TransactionEntity>;
 
     if (startDate && endDate) {
@@ -86,7 +86,19 @@ export class TransactionService {
       order: { date: 'DESC' },
     });
 
-    return transactions.map(this.formatTransactionResponse);
+    const totalExpense = transactions
+      .filter((transaction) => Number(transaction.value) < 0)
+      .reduce((sum, transaction) => sum + Number(transaction.value), 0);
+
+    const formattedExpense = new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: 'USD',
+    }).format(Math.abs(totalExpense));
+
+    return {
+      transactions: transactions.map(this.formatTransactionResponse),
+      totalExpense: formattedExpense,
+    };
   }
 
   async updateTransactionById(
