@@ -7,6 +7,7 @@ import {
   HttpCode,
   Param,
   UseGuards,
+  Delete,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { UserDto } from './user.dto';
@@ -29,5 +30,11 @@ export class UserController {
   async findUserById(@Param('id') id: string) {
     const user = await this.userService.findById(id);
     return user;
+  }
+
+  @Delete(':id')
+  async deleteUser(@Param('id') id: string): Promise<{ message: string }> {
+    await this.userService.deleteUser(id);
+    return { message: 'User deleted successfully' };
   }
 }

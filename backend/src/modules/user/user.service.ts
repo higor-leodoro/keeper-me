@@ -31,6 +31,19 @@ export class UserService {
     return await this.userRepository.save(newUser);
   }
 
+  async deleteUser(id: string): Promise<void> {
+    const user = await this.userRepository.findOne({
+      where: { id },
+      relations: ['transactions'],
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found!');
+    }
+
+    await this.userRepository.remove(user);
+  }
+
   async findById(id: string): Promise<UserEntity> {
     const user = await this.userRepository.findOneBy({ id });
     if (!user) {
