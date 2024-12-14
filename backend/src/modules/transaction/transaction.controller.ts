@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -47,5 +48,12 @@ export class TransactionController {
       transaction,
       user,
     );
+  }
+
+  @Delete(':id')
+  async deleteTransaction(@Param('id') id: string, @Req() request: Request) {
+    const user = request['user'];
+    await this.transactionsService.deleteTransaction(id, user);
+    return { message: 'transaction deleted successfully' };
   }
 }

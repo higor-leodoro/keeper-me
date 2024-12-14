@@ -76,6 +76,16 @@ export class TransactionService {
     return this.formatTransactionResponse(updatedTransaction);
   }
 
+  async deleteTransaction(id: string, user: UserEntity): Promise<void> {
+    const transaction = await this.transactionRepository.findOneBy({
+      id,
+      user,
+    });
+    if (!transaction) throw new Error('Transaction not found');
+
+    await this.transactionRepository.remove(transaction);
+  }
+
   private formatTransactionResponse(
     transaction: TransactionEntity,
   ): TransactionResponseDto {
