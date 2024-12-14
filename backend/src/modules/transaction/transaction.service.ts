@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { TransactionEntity } from './transaction.entity';
-import { Repository } from 'typeorm';
+import {
+  Between,
+  FindOptionsWhere,
+  MoreThanOrEqual,
+  Repository,
+} from 'typeorm';
 import { TransactionDto } from './dtos/transaction.dto';
 import { UserEntity } from '../user/user.entity';
 import { formatDate } from 'src/utils/format.date';
@@ -40,6 +45,45 @@ export class TransactionService {
   ): Promise<TransactionResponseDto[]> {
     const transactions = await this.transactionRepository.find({
       where: { user: { id: user.id } },
+    });
+
+    return transactions.map(this.formatTransactionResponse);
+  }
+
+  async getTransactionsByPeriod(
+    user: UserEntity,
+    startDate?: string,
+    endDate?: string,
+  ): Promise<TransactionResponseDto[]> {
+    let whereCondition: FindOptionsWhere<TransactionEntity>;
+
+    if (startDate && endDate) {
+      whereCondition = {
+        user: { id: user.id },
+        date: Between(new Date(startDate), new Date(endDate)),
+      };
+    } else if (startDate) {
+      const date = new Date(startDate);
+      whereCondition = {
+        user: { id: user.id },
+        date: Between(
+          new Date(date.setHours(0, 0, 0, 0)),
+          new Date(date.setHours(23, 59, 59, 999)),
+        ),
+      };
+    } else {
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+      whereCondition = {
+        user: { id: user.id },
+        date: MoreThanOrEqual(thirtyDaysAgo),
+      };
+    }
+
+    const transactions = await this.transactionRepository.find({
+      where: whereCondition,
+      order: { date: 'DESC' },
     });
 
     return transactions.map(this.formatTransactionResponse);

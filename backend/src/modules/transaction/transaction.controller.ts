@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
   Req,
   UseGuards,
 } from '@nestjs/common';
@@ -36,6 +37,26 @@ export class TransactionController {
     return await this.transactionsService.getAllTransactions(user);
   }
 
+  @Get('period')
+  async getTransactionsByPeriod(
+    @Query('startDate') startDate: string,
+    @Query('endDate') endDate: string,
+    @Req() request: Request,
+  ) {
+    const user = request['user'];
+    return await this.transactionsService.getTransactionsByPeriod(
+      user,
+      startDate,
+      endDate,
+    );
+  }
+
+  @Get('balance')
+  async calculateBalance(@Req() request: Request) {
+    const user = request['user'];
+    return { balance: await this.transactionsService.calculateBalance(user) };
+  }
+
   @Patch(':id')
   async updateTransaction(
     @Param('id') id: string,
@@ -55,11 +76,5 @@ export class TransactionController {
     const user = request['user'];
     await this.transactionsService.deleteTransaction(id, user);
     return { message: 'transaction deleted successfully' };
-  }
-
-  @Get('balance')
-  async calculateBalance(@Req() request: Request) {
-    const user = request['user'];
-    return { balance: await this.transactionsService.calculateBalance(user) };
   }
 }
