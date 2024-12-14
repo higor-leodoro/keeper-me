@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { TransactionService } from './transaction.service';
 import { AuthGuard } from '../auth/auth.guard';
 import { TransactionDto } from './transaction.dto';
@@ -18,5 +18,11 @@ export class TransactionController {
       transactionDto,
       user,
     );
+  }
+
+  @Get()
+  async getAllTransactions(@Req() request: Request) {
+    const user = request['user'];
+    return await this.transactionsService.getAllTransactions(user);
   }
 }

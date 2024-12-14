@@ -16,8 +16,14 @@ export class TransactionService {
     transaction: TransactionDto,
     user: UserEntity,
   ): Promise<Partial<TransactionEntity>> {
+    const value =
+      transaction.type === 'expense'
+        ? -Math.abs(transaction.value)
+        : Math.abs(transaction.value);
+
     const newTransaction = this.transactionRepository.create({
       ...transaction,
+      value,
       user,
     });
 
@@ -27,5 +33,11 @@ export class TransactionService {
     const { user: _, ...transactionWithoutUser } = savedTransaction;
 
     return transactionWithoutUser;
+  }
+
+  async getAllTransactions(user: UserEntity): Promise<TransactionEntity[]> {
+    return await this.transactionRepository.find({
+      where: { user: { id: user.id } },
+    });
   }
 }
