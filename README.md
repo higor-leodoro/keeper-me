@@ -87,9 +87,7 @@ Ensure you have the following installed on your machine:
    ```
 
 3. **Set up the environment variables**:
-   request the dotenv file by sending a message to:
-
-   higor.leodoro@gmail.com
+   As this is a test, the .env file is available in the repository.
 
 ---
 
