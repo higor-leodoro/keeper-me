@@ -14,7 +14,16 @@ import useViewModel from "./useViewModel";
 import MainButton from "@/components/MainButton";
 
 export default function SignUp() {
-  const { control, animatedStyle, goBack, navigate } = useViewModel();
+  const {
+    control,
+    animatedStyle,
+    goBack,
+    onSubmit,
+    handleSubmit,
+    isValid,
+    loading,
+    serverMessage,
+  } = useViewModel();
 
   return (
     <SafeScreen>
@@ -31,9 +40,17 @@ export default function SignUp() {
       </View>
       <Animated.View style={[styles.container, animatedStyle]}>
         <View style={styles.formContainer}>
+          {serverMessage && (
+            <CustomText
+              text={serverMessage}
+              weight="semiBold"
+              color={colors.error}
+            />
+          )}
           <ControlledTextInput
             control={control}
             name="name"
+            autoCorrect={false}
             style={styles.input}
             placeholder="Enter your name"
             placeholderTextColor={colors.textGray}
@@ -42,22 +59,21 @@ export default function SignUp() {
           />
           <ControlledTextInput
             control={control}
-            name="lastname"
+            name="lastName"
             spellCheck={false}
             style={styles.input}
             placeholder="Enter your last name"
-            secureTextEntry
             autoComplete="off"
             placeholderTextColor={colors.textGray}
             icon={<Feather name="lock" size={24} color={colors.background} />}
           />
           <ControlledTextInput
             control={control}
+            autoCapitalize="none"
             name="email"
-            spellCheck={false}
+            autoCorrect={false}
             style={styles.input}
             placeholder="Enter your email"
-            secureTextEntry
             autoComplete="off"
             placeholderTextColor={colors.textGray}
             icon={<Feather name="lock" size={24} color={colors.background} />}
@@ -75,7 +91,9 @@ export default function SignUp() {
           />
           <MainButton
             title="Sign Up"
-            onPress={() => navigate("SuccessSingUp")}
+            loading={loading}
+            disabled={!isValid}
+            onPress={handleSubmit(onSubmit)}
           />
         </View>
       </Animated.View>

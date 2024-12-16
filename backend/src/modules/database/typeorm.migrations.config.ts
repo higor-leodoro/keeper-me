@@ -10,14 +10,10 @@ const configService = new ConfigService();
 
 const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  host: configService.get<string>('DB_HOST'),
-  port: +configService.get<number>('DB_PORT'),
-  username: configService.get<string>('DB_USERNAME'),
-  password: configService.get<string>('DB_PASSWORD'),
-  database: configService.get<string>('DB_NAME'),
+  url: configService.get<string>('DATABASE_URL'),
   entities: [UserEntity, TransactionEntity],
   migrations: [join(__dirname, 'migrations/*.ts')],
-  synchronize: true,
+  synchronize: false,
 };
 
 export default new DataSource(dataSourceOptions);

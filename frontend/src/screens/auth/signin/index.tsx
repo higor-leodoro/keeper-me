@@ -23,7 +23,7 @@ export default function SignIn() {
       <Animated.View style={[styles.container, animatedStyle]}>
         <View style={styles.logoContainer}>
           <Image
-            source={require("@/assets/logo.png")}
+            source={require("@/assets/logo-c.png")}
             style={styles.logo}
             resizeMode="contain"
           />
