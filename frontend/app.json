@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "keeper.me",
-    "slug": "keeper.me",
+    "slug": "keeper-me",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -13,7 +13,8 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "keeper.me"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,6 +24,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "9c6bae06-fa10-4d0a-b973-b42de36e90e2"
+      }
     }
   }
 }
