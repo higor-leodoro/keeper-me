@@ -14,7 +14,7 @@ import useViewModel from "./useViewModel";
 import MainButton from "@/components/MainButton";
 
 export default function SignUp() {
-  const { control, animatedStyle, goBack } = useViewModel();
+  const { control, animatedStyle, goBack, navigate } = useViewModel();
 
   return (
     <SafeScreen>
@@ -73,7 +73,10 @@ export default function SignUp() {
             placeholderTextColor={colors.textGray}
             icon={<Feather name="lock" size={24} color={colors.background} />}
           />
-          <MainButton title="Sign Up" />
+          <MainButton
+            title="Sign Up"
+            onPress={() => navigate("SuccessSingUp")}
+          />
         </View>
       </Animated.View>
     </SafeScreen>

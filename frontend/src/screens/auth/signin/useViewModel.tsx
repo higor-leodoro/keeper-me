@@ -9,7 +9,7 @@ import {
 } from "react-native-reanimated";
 
 export default function useViewModel() {
-  const { navigate } = useNavigation();
+  const { navigate } = useNavigation<any>();
   const [checked, setChecked] = useState(false);
 
   const { control, handleSubmit } = useForm();

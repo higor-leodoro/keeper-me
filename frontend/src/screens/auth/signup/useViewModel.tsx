@@ -9,7 +9,7 @@ import {
 } from "react-native-reanimated";
 
 export default function useViewModel() {
-  const { goBack } = useNavigation();
+  const { goBack, navigate } = useNavigation<any>();
   const { control, handleSubmit } = useForm();
   const contentPosition = useSharedValue(0);
 
@@ -41,5 +41,5 @@ export default function useViewModel() {
     };
   });
 
-  return { control, animatedStyle, goBack };
+  return { control, animatedStyle, goBack, navigate };
 }
