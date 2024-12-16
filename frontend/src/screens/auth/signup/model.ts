@@ -9,7 +9,14 @@ type Payload = {
 
 const model = {
   async createUser(payload: Payload) {
-    const { data } = await api.post("/user", { payload });
+    console.log(payload);
+
+    const { data } = await api.post("/user", {
+      name: payload.name,
+      lastName: payload.lastName,
+      email: payload.email,
+      password: payload.password,
+    });
     return data;
   },
 };

@@ -69,6 +69,8 @@ export default function useViewModel() {
   });
 
   const onSubmit = async (data: FormData) => {
+    console.log(data);
+
     try {
       setLoading(true);
       const response = await model.createUser(data);

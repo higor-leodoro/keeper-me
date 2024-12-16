@@ -15,8 +15,17 @@ import useViewModel from "./useViewModel";
 import MainButton from "@/components/MainButton";
 
 export default function SignIn() {
-  const { control, animatedStyle, checked, setChecked, navigate } =
-    useViewModel();
+  const {
+    control,
+    animatedStyle,
+    checked,
+    setChecked,
+    handleSubmit,
+    onSubmit,
+    isValid,
+    loading,
+    navigate,
+  } = useViewModel();
 
   return (
     <SafeScreen>
@@ -31,6 +40,7 @@ export default function SignIn() {
         <View style={styles.formContainer}>
           <ControlledTextInput
             control={control}
+            autoCapitalize="none"
             name="email"
             placeholder="Enter your email"
             icon={<Feather name="user" size={24} color={colors.background} />}
@@ -51,7 +61,12 @@ export default function SignIn() {
             containerStyle={styles.checkbox}
             textStyle={styles.checkboxText}
           />
-          <MainButton title="Sign In" />
+          <MainButton
+            title="Sign In"
+            disabled={!isValid}
+            loading={loading}
+            onPress={handleSubmit(onSubmit)}
+          />
           <TouchableOpacity
             style={styles.singup}
             onPress={() => navigate("SignUp")}

@@ -18,7 +18,10 @@ export class AuthService {
     );
   }
 
-  async signIn(email: string, password: string): Promise<AuthResponseDto> {
+  async signIn(
+    email: string,
+    password: string,
+  ): Promise<AuthResponseDto & any> {
     if (!email || !password) {
       throw new UnauthorizedException('Email e senha são obrigatórios');
     }
@@ -28,15 +31,21 @@ export class AuthService {
     if (!userExists || !bcryptHashSync(password, userExists.password)) {
       throw new UnauthorizedException();
     }
+
     const payload = {
       sub: userExists.id,
       email: userExists.email,
     };
+
     const token = this.jwtService.sign(payload);
 
-    // await this.userService.updateUserToken(userExists.id, token);
+    const { password: _, ...userData } = userExists;
 
-    return { token, expiresIn: this.jwtExpirationTimeInSeconds };
+    return {
+      token,
+      expiresIn: this.jwtExpirationTimeInSeconds,
+      user: userData,
+    };
   }
 
   async validateToken(token: string) {

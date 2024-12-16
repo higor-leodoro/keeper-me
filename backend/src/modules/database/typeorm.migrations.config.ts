@@ -10,13 +10,14 @@ const configService = new ConfigService();
 
 const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  url: process.env.DATABASE_URL,
+  host: configService.get<string>('DB_HOST'),
+  port: +configService.get<number>('DB_PORT'),
+  username: configService.get<string>('DB_USERNAME'),
+  password: configService.get<string>('DB_PASSWORD'),
+  database: configService.get<string>('DB_NAME'),
   entities: [UserEntity, TransactionEntity],
   migrations: [join(__dirname, 'migrations/*.ts')],
-  synchronize: false,
-  ssl: {
-    rejectUnauthorized: false,
-  },
+  synchronize: true,
 };
 
 export default new DataSource(dataSourceOptions);
