@@ -10,7 +10,7 @@ const configService = new ConfigService();
 
 const dataSourceOptions: DataSourceOptions = {
   type: 'postgres',
-  url: configService.get<string>('DATABASE_URL'),
+  url: process.env.DATABASE_URL,
   entities: [UserEntity, TransactionEntity],
   migrations: [join(__dirname, 'migrations/*.ts')],
   synchronize: false,
