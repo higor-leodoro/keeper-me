@@ -6,7 +6,7 @@ const colors = {
   inactive: "#484B5C",
   success: "#57BF9C",
   light: "#F0F4FF",
-  error: "#C63637",
+  error: "#EF463A",
   highlight: {
     light: "#FAFDA6",
     medium: "#F9D16B",
