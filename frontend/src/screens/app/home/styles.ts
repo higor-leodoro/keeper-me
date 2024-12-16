@@ -31,6 +31,9 @@ const styles = StyleSheet.create({
     borderTopEndRadius: 18,
     backgroundColor: colors.light,
   },
+  selectedButton: {
+    backgroundColor: colors.background,
+  },
 });
 
 export default styles;
