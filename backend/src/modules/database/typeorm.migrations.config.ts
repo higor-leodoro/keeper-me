@@ -14,6 +14,9 @@ const dataSourceOptions: DataSourceOptions = {
   entities: [UserEntity, TransactionEntity],
   migrations: [join(__dirname, 'migrations/*.ts')],
   synchronize: false,
+  ssl: {
+    rejectUnauthorized: false,
+  },
 };
 
 export default new DataSource(dataSourceOptions);
