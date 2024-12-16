@@ -50,44 +50,24 @@ export default function SignUp() {
           <ControlledTextInput
             control={control}
             name="name"
-            autoCorrect={false}
-            style={styles.input}
             placeholder="Enter your name"
-            placeholderTextColor={colors.textGray}
-            autoComplete="off"
-            icon={<Feather name="user" size={24} color={colors.background} />}
           />
           <ControlledTextInput
             control={control}
             name="lastName"
-            spellCheck={false}
-            style={styles.input}
             placeholder="Enter your last name"
-            autoComplete="off"
-            placeholderTextColor={colors.textGray}
-            icon={<Feather name="lock" size={24} color={colors.background} />}
           />
           <ControlledTextInput
             control={control}
             autoCapitalize="none"
             name="email"
-            autoCorrect={false}
-            style={styles.input}
             placeholder="Enter your email"
-            autoComplete="off"
-            placeholderTextColor={colors.textGray}
-            icon={<Feather name="lock" size={24} color={colors.background} />}
           />
           <ControlledTextInput
             control={control}
             name="password"
-            spellCheck={false}
-            style={styles.input}
             placeholder="Enter your password"
             secureTextEntry
-            autoComplete="off"
-            placeholderTextColor={colors.textGray}
-            icon={<Feather name="lock" size={24} color={colors.background} />}
           />
           <MainButton
             title="Sign Up"

@@ -7,7 +7,7 @@ import DrawerSceneWrapper from "@/constants/DrawerSceneWarapper";
 import Header from "@/components/Header";
 import colors from "@/constants/colors";
 import CustomText from "@/components/CustomText";
-import TransactionsList from "@/components/TransactionsList";
+import TransactionsList from "./TransactionsList";
 
 export default function Home() {
   return (

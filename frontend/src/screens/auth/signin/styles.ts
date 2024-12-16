@@ -28,16 +28,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     gap: 16,
   },
-  input: {
-    width: "100%",
-    paddingVertical: "4%",
-    paddingHorizontal: 20,
-    paddingLeft: 35,
-    borderRadius: 4,
-    fontFamily: poppins.medium,
-    color: colors.textDark,
-    backgroundColor: colors.light,
-  },
   checkbox: {
     backgroundColor: "transparent",
     margin: 0,

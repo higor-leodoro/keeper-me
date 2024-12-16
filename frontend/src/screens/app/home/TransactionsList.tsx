@@ -1,6 +1,6 @@
 import { View, FlatList, StyleSheet } from "react-native";
 
-import CustomText from "./CustomText";
+import CustomText from "@/components/CustomText";
 import colors from "@/constants/colors";
 
 import { Feather } from "@expo/vector-icons/";

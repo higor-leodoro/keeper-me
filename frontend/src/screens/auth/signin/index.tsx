@@ -32,21 +32,15 @@ export default function SignIn() {
           <ControlledTextInput
             control={control}
             name="email"
-            style={styles.input}
             placeholder="Enter your email"
-            placeholderTextColor={colors.textGray}
-            autoComplete="off"
             icon={<Feather name="user" size={24} color={colors.background} />}
           />
           <ControlledTextInput
             control={control}
             name="password"
             spellCheck={false}
-            style={styles.input}
             placeholder="Enter your password"
             secureTextEntry
-            autoComplete="off"
-            placeholderTextColor={colors.textGray}
             icon={<Feather name="lock" size={24} color={colors.background} />}
           />
           <CheckBox

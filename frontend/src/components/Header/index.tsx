@@ -1,23 +1,45 @@
+import { useEffect } from "react";
 import { View, StyleSheet, TouchableOpacity } from "react-native";
-import { useRoute } from "@react-navigation/native";
-import { useNavigation } from "@react-navigation/native";
-
+import { useRoute, useNavigation } from "@react-navigation/native";
 import Feather from "@expo/vector-icons/Feather";
 
 import CustomText from "../CustomText";
 import colors from "@/constants/colors";
 
+enum AppRoutes {
+  Home = "Home",
+  RegisterTransaction = "RegisterTransaction",
+}
+
 export default function Header() {
-  const { openDrawer } = useNavigation<any>();
+  const navigation = useNavigation<any>();
   const route = useRoute();
   const routeName = route.name;
+
+  function getRouteLabel(routeName: string): string {
+    switch (routeName) {
+      case AppRoutes.Home:
+        return "Home";
+      case AppRoutes.RegisterTransaction:
+        return "Register Transaction";
+      default:
+        return routeName;
+    }
+  }
+
+  useEffect(() => {
+    // Caso precise rodar algum efeito quando a rota mudar
+  }, [routeName]);
+
+  const routeLabel = getRouteLabel(routeName);
+
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.button} onPress={openDrawer}>
+      <TouchableOpacity style={styles.button} onPress={navigation.openDrawer}>
         <Feather name="menu" size={24} color={colors.light} />
       </TouchableOpacity>
       <CustomText
-        text={routeName}
+        text={routeLabel}
         weight="bold"
         fontSize={18}
         style={styles.text}

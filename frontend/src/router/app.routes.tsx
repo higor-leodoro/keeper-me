@@ -6,6 +6,7 @@ import poppins from "@/constants/font";
 import { Feather } from "@expo/vector-icons";
 
 import Home from "@/screens/app/home";
+import RegisterTransaction from "@/screens/app/register-transaction";
 
 export default function AppRoutes() {
   const Drawer = createDrawerNavigator();
@@ -43,10 +44,20 @@ export default function AppRoutes() {
         name="Home"
         component={Home}
         options={{
-          drawerLabel: "Inicio",
-          drawerIcon: ({ size, color }) => (
-            <Feather name="home" size={size} color={color} />
-          ),
+          drawerLabel: "Home",
+          // drawerIcon: ({ size, color }) => (
+          //   <Feather name="home" size={size} color={color} />
+          // ),
+        }}
+      />
+      <Drawer.Screen
+        name="RegisterTransaction"
+        component={RegisterTransaction}
+        options={{
+          drawerLabel: "Transaction",
+          // drawerIcon: ({ size, color }) => (
+          //   <Feather name="home" size={size} color={color} />
+          // ),
         }}
       />
     </Drawer.Navigator>
